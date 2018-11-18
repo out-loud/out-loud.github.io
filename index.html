@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;docker&quot;,&quot;csharp&quot;,&quot;javascript&quot;,&quot;bash&quot;,&quot;sh&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,9 +212,11 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="docker">docker</a>
+              <a href="#" data-language-name="csharp">csharp</a>
               <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="bash">bash</a>
+              <a href="#" data-language-name="sh">sh</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -222,7 +224,41 @@
         <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+            <a href="#wstep" class="toc-h1 toc-link" data-title="Wstęp">Wstęp</a>
+          </li>
+          <li>
+            <a href="#architektura" class="toc-h1 toc-link" data-title="Architektura">Architektura</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#kontrola-wersji" class="toc-h2 toc-link" data-title="Kontrola wersji">Kontrola wersji</a>
+                  </li>
+                  <li>
+                    <a href="#komunikacja" class="toc-h2 toc-link" data-title="Komunikacja">Komunikacja</a>
+                  </li>
+                  <li>
+                    <a href="#chmura" class="toc-h2 toc-link" data-title="Chmura">Chmura</a>
+                  </li>
+                  <li>
+                    <a href="#monitorowanie" class="toc-h2 toc-link" data-title="Monitorowanie">Monitorowanie</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#instrukcje" class="toc-h1 toc-link" data-title="Instrukcje">Instrukcje</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#uruchamianie-lokalnie" class="toc-h2 toc-link" data-title="Uruchamianie lokalnie">Uruchamianie lokalnie</a>
+                  </li>
+                  <li>
+                    <a href="#uruchamianie-w-klastrze-kubernetes" class="toc-h2 toc-link" data-title="Uruchamianie w klastrze Kubernetes">Uruchamianie w klastrze Kubernetes</a>
+                  </li>
+                  <li>
+                    <a href="#uruchamianie-w-chmurze" class="toc-h2 toc-link" data-title="Uruchamianie w chmurze">Uruchamianie w chmurze</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#licencja" class="toc-h1 toc-link" data-title="Licencja">Licencja</a>
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
@@ -246,19 +282,63 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://github.com/lord/slate'>Dokumentacja stworzona przy pomocy Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+        <h1 id='wstep'>Wstęp</h1>
+<p>Outloud jest serwisem umożliwiającym naukę poprawnej wymowy wyrażen w języku angielskim.</p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Serwis jest realizacją pracy dyplomowej o temacie !TODO - jaki ja mam temat?!</p>
 
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>Serwis składa się z części serwerowej oraz klienckiej. Część serwerowa składa się z mikrousług (ang. microservices) opartych o technologię .NET Core oraz język C#. 
+Część kliencka serwisu to aplikacja mobilna, dostępna na platformę Android. Aplikacja ta została stworzona przy pomocy frameworka React-Native w języku JavaScript i możliwa jest do pobrania w postaci pliku *.apk z repozytorium. !TODO - link!</p>
+<h1 id='architektura'>Architektura</h1>
+<p>Tworząc część serwerową (ang. backend) zdecydowałem się zastosować architekturę mikroserwisową. 
+Architektura mikroserwisowa pozwala na lepszą kontrolę rozwoju oprogramowania:
+ - lepszy dobór języków programowania do określonych podzadań systemu.</p>
+<h2 id='kontrola-wersji'>Kontrola wersji</h2>
+<p>Kod źródłowy całego projektu znajduję się w repozytorium <a href="https://github.com/out-loud">GitHub</a></p>
+<h2 id='komunikacja'>Komunikacja</h2>
+<p>Elementy backendu komunikują się pomiędzy sobą za pomocą :
+ - kolejek zdarzeń opartych o protokół AMQP i narzędzie RabbitMQ dla asynchronicznych zapytań typu POST
+ - protokołu HTTP i RESTful API dla zapytań typu GET</p>
+<h2 id='chmura'>Chmura</h2>
+<p>Wszystkie składowe serwisu tworzone są w sposób umożliwiający wdrożenie w dowolnej chmurze, oferując m.in. konteneryzację przy użyciu narzędzia Docker.</p>
+<h2 id='monitorowanie'>Monitorowanie</h2><h1 id='instrukcje'>Instrukcje</h1><h2 id='uruchamianie-lokalnie'>Uruchamianie lokalnie</h2>
+<p>Zanim developer rozpocznie pracę nad jednym z mikroserwisów, wymagane jest stworzenie odpowiedniej infrastruktury do uruchomienia całego projektu.</p>
+
+<p>Aby uruchomić projekt należy pobrać podprojekt Outloud a następnie uruchomić skrypt git-pull.sh</p>
+
+<blockquote>
+<p>Uruchamianie mikroserwisu napisanego w .NET Core:
+<code>sh
+dotnet watch run
+</code></p>
+
+<p>Uruchamianie przy użyciu Dockera należy uruchomić w projekcie Outloud komendę:
+<code>sh
+docker-compose up
+</code></p>
+</blockquote>
+<h3 id='wymagania'>Wymagania</h3>
+<ul>
+<li><strong>npm</strong> w wersji minimum 6.4</li>
+<li><strong>.NET Core SDK</strong> w wersji minimum 2.1.403</li>
+<li><strong>Docker</strong> w wersji minimum 18.06</li>
+<li><strong>Git Bash</strong> </li>
+<li>Emulator systemu Android lub fizyczne urządzenie na tej platformie w wersji minimum 6.</li>
+</ul>
+<h3 id='polecane-narzedzia'>Polecane narzędzia</h3>
+<ul>
+<li>VSCode - darmowy edytor tekstowy</li>
+<li>SourceTree - darmowe narzędzie do obsługi repozytoriów</li>
+<li>ADB - darmowy emulator Android, dostępny z Android Studio oraz VS w pakiecie Xamarin</li>
+</ul>
+<h2 id='uruchamianie-w-klastrze-kubernetes'>Uruchamianie w klastrze Kubernetes</h2><h2 id='uruchamianie-w-chmurze'>Uruchamianie w chmurze</h2><h1 id='licencja'>Licencja</h1>
+<p>Oprogramowanie dostępne jest na licencji MIT.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
@@ -495,9 +575,11 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="docker">docker</a>
+                <a href="#" data-language-name="csharp">csharp</a>
                 <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="bash">bash</a>
+                <a href="#" data-language-name="sh">sh</a>
           </div>
       </div>
     </div>

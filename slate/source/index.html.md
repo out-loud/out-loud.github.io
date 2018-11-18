@@ -2,14 +2,15 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
+  - shell #!TODO - verify shell and CMD
+  - docker
+  - csharp
   - javascript
+  - bash
+  - sh
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - <a href='https://github.com/lord/slate'>Dokumentacja stworzona przy pomocy Slate</a>
 
 includes:
   - errors
@@ -17,13 +18,68 @@ includes:
 search: true
 ---
 
-# Introduction
+# Wstęp
+Outloud jest serwisem umożliwiającym naukę poprawnej wymowy wyrażen w języku angielskim.
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Serwis jest realizacją pracy dyplomowej o temacie !TODO - jaki ja mam temat?!
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Serwis składa się z części serwerowej oraz klienckiej. Część serwerowa składa się z mikrousług (ang. microservices) opartych o technologię .NET Core oraz język C#. 
+Część kliencka serwisu to aplikacja mobilna, dostępna na platformę Android. Aplikacja ta została stworzona przy pomocy frameworka React-Native w języku JavaScript i możliwa jest do pobrania w postaci pliku *.apk z repozytorium. !TODO - link!
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# Architektura 
+Tworząc część serwerową (ang. backend) zdecydowałem się zastosować architekturę mikroserwisową. 
+Architektura mikroserwisowa pozwala na lepszą kontrolę rozwoju oprogramowania:
+ - lepszy dobór języków programowania do określonych podzadań systemu.
+
+## Kontrola wersji
+Kod źródłowy całego projektu znajduję się w repozytorium [GitHub](https://github.com/out-loud)
+
+
+## Komunikacja
+Elementy backendu komunikują się pomiędzy sobą za pomocą :
+ - kolejek zdarzeń opartych o protokół AMQP i narzędzie RabbitMQ dla asynchronicznych zapytań typu POST
+ - protokołu HTTP i RESTful API dla zapytań typu GET
+
+## Chmura
+Wszystkie składowe serwisu tworzone są w sposób umożliwiający wdrożenie w dowolnej chmurze, oferując m.in. konteneryzację przy użyciu narzędzia Docker.
+
+## Monitorowanie
+
+# Instrukcje
+## Uruchamianie lokalnie
+Zanim developer rozpocznie pracę nad jednym z mikroserwisów, wymagane jest stworzenie odpowiedniej infrastruktury do uruchomienia całego projektu.
+
+Aby uruchomić projekt należy pobrać podprojekt Outloud a następnie uruchomić skrypt git-pull.sh
+
+> Uruchamianie mikroserwisu napisanego w .NET Core:
+```sh
+dotnet watch run
+```
+
+> Uruchamianie przy użyciu Dockera należy uruchomić w projekcie Outloud komendę:
+```sh
+docker-compose up
+```
+
+### Wymagania
+  - **npm** w wersji minimum 6.4
+  - **.NET Core SDK** w wersji minimum 2.1.403
+  - **Docker** w wersji minimum 18.06
+  - **Git Bash** 
+  - Emulator systemu Android lub fizyczne urządzenie na tej platformie w wersji minimum 6.
+
+### Polecane narzędzia
+  - VSCode - darmowy edytor tekstowy
+  - SourceTree - darmowe narzędzie do obsługi repozytoriów
+  - ADB - darmowy emulator Android, dostępny z Android Studio oraz VS w pakiecie Xamarin
+
+## Uruchamianie w klastrze Kubernetes
+
+## Uruchamianie w chmurze
+
+
+# Licencja
+Oprogramowanie dostępne jest na licencji MIT.
 
 # Authentication
 
